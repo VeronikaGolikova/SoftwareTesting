@@ -1,3 +1,5 @@
+package sandbox;
+
 public class Point {
     public double x;
     public double y;
@@ -13,9 +15,9 @@ public class Point {
 
     }
 
-    public void countDistance(Point p2) {
+    public double countDistance(Point p2) {
 
-        System.out.println("Вычисление при помощи метода: \n" + Math.sqrt((p2.x - x) * (p2.x - x) + (p2.y - y) * (p2.y - y)));
+        return Math.sqrt((p2.x - x) * (p2.x - x) + (p2.y - y) * (p2.y - y));
     }
 
 }
