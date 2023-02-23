@@ -1,11 +1,15 @@
 package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import ru.stqa.pft.addressbook.model.GroupData;
 
 public class GroupHelper {
-    public WebDriver wd;
+    private FirefoxDriver wd;
+
+    public GroupHelper(FirefoxDriver wd) {
+        this.wd = wd;
+    }
 
     public void submitGroupCreation() {
       wd.findElement(By.name("submit")).click();
