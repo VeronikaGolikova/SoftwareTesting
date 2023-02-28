@@ -10,7 +10,7 @@ public class GroopCreationTests extends TestBase {
   public void testGroopCreation() throws Exception {
     app.getNavigationHelper().gotoPage("groups");
     app.getGroupHelper().initGroupCreation();
-    app.getGroupHelper().fillGroupForm(new GroupData("test3", "testFire", "testFire"));
+    app.getGroupHelper().fillGroupForm(new GroupData("testNull", null, null));
     app.getGroupHelper().submitGroupCreation();
     app.getNavigationHelper().gotoPage("groups");
     app.getNavigationHelper().gotoPage("Logout");
