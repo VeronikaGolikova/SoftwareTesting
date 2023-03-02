@@ -4,7 +4,7 @@ import org.testng.annotations.Test;
 import ru.stqa.pft.addressbook.model.GroupData;
 import ru.stqa.pft.addressbook.tests.TestBase;
 
-public class GroopCreationTests extends TestBase {
+public class GroupCreationTests extends TestBase {
 
   @Test
   public void testGroopCreation() throws Exception {
