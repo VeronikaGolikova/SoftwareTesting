@@ -5,7 +5,6 @@ import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.openqa.selenium.remote.Browser;
 import org.openqa.selenium.safari.SafariDriver;
 
@@ -34,7 +33,7 @@ public class ApplicationManager {
             wd = new SafariDriver();
         }
 
-        wd.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        wd.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         wd.get("http://localhost/addressbook/index.php");
         groupHelper = new GroupHelper(wd);
         navigationHelper = new NavigationHelper(wd);
