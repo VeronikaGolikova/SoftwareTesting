@@ -11,7 +11,7 @@ public class ContactModificationTests extends TestBase {
         app.getNavigationHelper().gotoHomePage();
         if (!app.getContactHelper().isThereAContact()) {
             app.getNavigationHelper().gotoAddNewContactPage();
-            app.getContactHelper().createNewGroup(new ContactData("VeronikaDel", "IgorevnaDel", "GolikovaDel", "nickDel", "someDel@mail.ru"));
+            app.getContactHelper().createNewContact(new ContactData("VeronikaDel", "IgorevnaDel", "GolikovaDel", "nickDel", "someDel@mail.ru"));
             app.getNavigationHelper().gotoHomePage();
         }
         app.getContactHelper().selectContact();
