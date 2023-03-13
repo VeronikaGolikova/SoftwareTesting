@@ -50,12 +50,12 @@ public class ContactHelper extends HelperBase{
         return isElementPresent(By.name("selected[]"));
     }
 
-    public void createNewContact(ContactData contactData) {
+    public void create(ContactData contactData) {
         fillContactForm(contactData);
         submitContactCreation();
     }
 
-    public List<ContactData> getContactList() {
+    public List<ContactData> list() {
         List<ContactData> contactList = new ArrayList<ContactData>();
         List<WebElement> elements = wd.findElements(By.name("entry"));
         for (WebElement element : elements) {

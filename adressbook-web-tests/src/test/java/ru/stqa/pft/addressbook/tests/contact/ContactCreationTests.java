@@ -12,24 +12,20 @@ public class ContactCreationTests extends TestBase {
 
   @Test
   public void testCreateNewContact() throws Exception {
-    app.getNavigationHelper().gotoHomePage();
-    List<ContactData> before = app.getContactHelper().getContactList();
-    app.getNavigationHelper().gotoAddNewContactPage();
+    app.goTo().homePage();
+    List<ContactData> before = app.contact().list();
+    app.goTo().newContactPage();
     ContactData contact = new ContactData("Veronika", "Igorevna", "Golikova", "nick", "some@mail.ru");
-    app.getContactHelper().createNewContact(contact);
-    app.getNavigationHelper().gotoHomePage();
+    app.contact().create(contact);
+    app.goTo().homePage();
 
-    List<ContactData> after = app.getContactHelper().getContactList();
-    Assert.assertEquals(after.size(), before.size()+1);
+    List<ContactData> after = app.contact().list();
+    Assert.assertEquals(after.size(), before.size() + 1);
 
     before.add(contact);
     Comparator<? super ContactData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
     before.sort(byId);
     after.sort(byId);
     Assert.assertEquals(before, after);
-
-
-
   }
-
 }
