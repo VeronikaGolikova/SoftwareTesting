@@ -15,13 +15,12 @@ public class ContactCreationTests extends TestBase {
     app.goTo().homePage();
     List<ContactData> before = app.contact().list();
     app.goTo().newContactPage();
-    ContactData contact = new ContactData("Veronika", "Igorevna", "Golikova", "nick", "some@mail.ru");
+    ContactData contact = new ContactData().
+            withFirstname("Veronika").withLastname("Golikova").withMiddlename("Igorevna").withNick("nick").withEmail("some@mail.ru");
     app.contact().create(contact);
     app.goTo().homePage();
-
     List<ContactData> after = app.contact().list();
     Assert.assertEquals(after.size(), before.size() + 1);
-
     before.add(contact);
     Comparator<? super ContactData> byId = (g1, g2) -> Integer.compare(g1.getId(), g2.getId());
     before.sort(byId);
