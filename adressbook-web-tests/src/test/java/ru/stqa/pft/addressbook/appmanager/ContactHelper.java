@@ -6,7 +6,9 @@ import org.openqa.selenium.WebElement;
 import ru.stqa.pft.addressbook.model.ContactData;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class ContactHelper extends HelperBase{
 
@@ -26,12 +28,16 @@ public class ContactHelper extends HelperBase{
         click(By.xpath("//div[@id='content']/form/input[21]"));
     }
 
-    public void selectContact(int index) {
-        wd.findElements(By.name("selected[]")).get(index).click();
+    public void selectContactById(int id) {
+        wd.findElement(By.xpath("//input[@value='" + id + "']")).click();
     }
 
     public void deleteSelectedContact() {
         click(By.xpath("//input[@value='Delete']"));
+    }
+
+    public void deleteSelectedContactById(int id) {
+        wd.findElement(By.xpath("//input[@value='" + id + "']")).click();
     }
 
     public void submitContactDeletion() {
@@ -55,6 +61,11 @@ public class ContactHelper extends HelperBase{
         submitContactCreation();
     }
 
+    public void delete(ContactData contact) {
+        deleteSelectedContactById(contact.getId());
+        submitContactDeletion();
+    }
+
     public List<ContactData> list() {
         List<ContactData> contactList = new ArrayList<ContactData>();
         List<WebElement> elements = wd.findElements(By.name("entry"));
@@ -67,4 +78,18 @@ public class ContactHelper extends HelperBase{
         }
         return contactList;
     }
+
+    public Set<ContactData> all() {
+        Set<ContactData> contactList = new HashSet<ContactData>();
+        List<WebElement> elements = wd.findElements(By.name("entry"));
+        for (WebElement element : elements) {
+            String lastName = element.findElement(By.xpath(".//td[2]")).getText();
+            String firstName = element.findElement(By.xpath(".//td[3]")).getText();
+            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
+            ContactData contact = new ContactData().withId(id).withFirstname(firstName).withLastname(lastName);
+            contactList.add(contact);
+        }
+        return contactList;
+    }
+
 }
