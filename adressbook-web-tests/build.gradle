@@ -11,5 +11,6 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
     implementation 'org.testng:testng:7.3.0'
     implementation 'org.seleniumhq.selenium:selenium-java:4.8.0'
+    implementation 'org.hamcrest:hamcrest:2.2'
 
 }
