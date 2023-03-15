@@ -36,16 +36,12 @@ public class ContactHelper extends HelperBase{
         click(By.xpath("//input[@value='Delete']"));
     }
 
-    public void deleteSelectedContactById(int id) {
-        wd.findElement(By.xpath("//input[@value='" + id + "']")).click();
-    }
-
     public void submitContactDeletion() {
         wd.switchTo().alert().accept();
     }
 
-    public void editSelectedContact(int index) {
-        wd.findElements(By.xpath("//img[@alt='Edit']")).get(index).click();
+    public void editSelectedContactById(int id) {
+        wd.findElement(By.xpath("//a[contains(@href,'edit.php?id=" + id + "')]")).click();
     }
 
     public void submitContactModification() {
@@ -62,21 +58,14 @@ public class ContactHelper extends HelperBase{
     }
 
     public void delete(ContactData contact) {
-        deleteSelectedContactById(contact.getId());
+        wd.findElement(By.xpath("//input[@value='" + contact.getId() + "']")).click();
+        deleteSelectedContact();
         submitContactDeletion();
     }
 
-    public List<ContactData> list() {
-        List<ContactData> contactList = new ArrayList<ContactData>();
-        List<WebElement> elements = wd.findElements(By.name("entry"));
-        for (WebElement element : elements) {
-            String lastName = element.findElement(By.xpath(".//td[2]")).getText();
-            String firstName = element.findElement(By.xpath(".//td[3]")).getText();
-            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
-            ContactData contact = new ContactData().withId(id).withFirstname(firstName).withLastname(lastName);
-            contactList.add(contact);
-        }
-        return contactList;
+    public void edit(ContactData contactForModification) {
+        selectContactById(contactForModification.getId());
+        editSelectedContactById(contactForModification.getId());
     }
 
     public Set<ContactData> all() {
