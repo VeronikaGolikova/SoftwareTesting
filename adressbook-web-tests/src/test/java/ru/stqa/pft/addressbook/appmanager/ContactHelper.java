@@ -5,12 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
-import ru.stqa.pft.addressbook.model.Groups;
 
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public class ContactHelper extends HelperBase{
 
@@ -24,6 +20,10 @@ public class ContactHelper extends HelperBase{
         type(By.name("lastname"), contactData.getLastname());
         type(By.name("nickname"), contactData.getNick());
         type(By.name("email"), contactData.getEmail());
+    }
+
+    public int count() {
+        return wd.findElements(By.xpath("//tr[@name]")).size();
     }
 
     public void submitContactCreation() {
