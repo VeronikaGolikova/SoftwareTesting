@@ -80,15 +80,28 @@ public class ContactHelper extends HelperBase{
             return new Contacts(contactCache);
         }
         contactCache = new Contacts();
-        List<WebElement> elements = wd.findElements(By.name("entry"));
-        for (WebElement element : elements) {
-            String lastName = element.findElement(By.xpath(".//td[2]")).getText();
-            String firstName = element.findElement(By.xpath(".//td[3]")).getText();
-            int id = Integer.parseInt(element.findElement(By.tagName("input")).getAttribute("id"));
-            ContactData contact = new ContactData().withId(id).withFirstname(firstName).withLastname(lastName);
+        List<WebElement> rows = wd.findElements(By.name("entry"));
+        for (WebElement row : rows) {
+            String lastName = row.findElement(By.xpath(".//td[2]")).getText();
+            String firstName = row.findElement(By.xpath(".//td[3]")).getText();
+            String allPhones = row.findElement(By.xpath(".//td[6]")).getText();
+            int id = Integer.parseInt(row.findElement(By.tagName("input")).getAttribute("id"));
+            ContactData contact = new ContactData().withId(id).withFirstname(firstName).withLastname(lastName)
+                    .withAllPhones(allPhones);
             contactCache.add(contact);
         }
         return new Contacts(contactCache);
     }
 
+    public ContactData infoFromEditForm(ContactData contact) {
+        edit(contact);
+        String firstName = wd.findElement(By.name("firstname")).getAttribute("value");
+        String lastName = wd.findElement(By.name("lastname")).getAttribute("value");
+        String home = wd.findElement(By.name("home")).getAttribute("value");
+        String mobile = wd.findElement(By.name("mobile")).getAttribute("value");
+        String work = wd.findElement(By.name("work")).getAttribute("value");
+        wd.navigate().back();
+        return new ContactData().withId(contact.getId()).withFirstname(firstName).withLastname(lastName)
+                .withMobilePhone(mobile).withWorkPhone(work).withHomePhone(home);
+    }
 }
