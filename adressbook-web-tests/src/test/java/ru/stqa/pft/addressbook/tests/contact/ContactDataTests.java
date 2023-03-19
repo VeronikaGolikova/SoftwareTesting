@@ -19,27 +19,36 @@ public class ContactDataTests extends TestBase {
     if (app.contact().all().size() == 0) {
       app.goTo().newContactPage();
       app.contact().create(new ContactData()
-              .withFirstname("VeronikaPhone").withMiddlename("IgorevnaPhone").withLastname("GolikovaPH").withNick("nickPH").withEmail("somePH@mail.ru")
+              .withFirstname("VeronikaWithData").withMiddlename("IgorevnaWithData").withLastname("GolikovaWithData").withNick("nickPH").withEmail("somePH@mail.ru")
               .withHomePhone("111").withMobilePhone("222").withWorkPhone("333").withAddress("какой-то адрес 23").withEmail3("emtyemail@ya.ru"));
       app.goTo().homePage();
     }
   }
 
   @Test
+  public void testContactWithData() throws Exception {
+    ContactData contact = app.contact().all().iterator().next();
+    ContactData contactDataFromEditForm = app.contact().infoFromEditForm(contact);
+    assertThat(contact.getAllPhones(), equalTo(mergePhones(contactDataFromEditForm)));
+    assertThat(contact.getAddress(), equalTo(contactDataFromEditForm.getAddress()));
+    assertThat(contact.getAllEmails(), equalTo(mergeEmails(contactDataFromEditForm)));
+  }
+
+  @Test (enabled = false)
   public void testContactPhones() throws Exception {
     ContactData contact = app.contact().all().iterator().next();
     ContactData contactDataFromEditForm = app.contact().infoFromEditForm(contact);
     assertThat(contact.getAllPhones(), equalTo(mergePhones(contactDataFromEditForm)));
   }
 
-  @Test
+  @Test (enabled = false)
   public void testContactAddress() throws Exception {
     ContactData contact = app.contact().all().iterator().next();
     ContactData contactDataFromEditForm = app.contact().infoFromEditForm(contact);
     assertThat(contact.getAddress(), equalTo(contactDataFromEditForm.getAddress()));
   }
 
-  @Test
+  @Test (enabled = false)
   public void testContactEmails() throws Exception {
     ContactData contact = app.contact().all().iterator().next();
     ContactData contactDataFromEditForm = app.contact().infoFromEditForm(contact);
