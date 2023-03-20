@@ -52,18 +52,18 @@ public class ContactDataGenerator {
     private void saveAsJson(List<ContactData> contacts, File file) throws IOException {
         Gson gson = new GsonBuilder().setPrettyPrinting().excludeFieldsWithoutExposeAnnotation().create();
         String json = gson.toJson(contacts);
-        Writer writer = new FileWriter(file);
-        writer.write(json);
-        writer.close();
+        try(Writer writer = new FileWriter(file)) {
+            writer.write(json);
+        }
     }
 
     private void saveAsCsv(List<ContactData> contacts, File file) throws IOException {
         System.out.println(new File(".").getAbsolutePath());
-        Writer writer = new FileWriter(file);
-        for (ContactData contact : contacts) {
-            writer.write(String.format("%s, %s, %s, %s\n", contact.getFirstname(), contact.getLastname(), contact.getMiddlename(), contact.getMobilePhone()));
+        try (Writer writer = new FileWriter(file)) {
+            for (ContactData contact : contacts) {
+                writer.write(String.format("%s, %s, %s, %s\n", contact.getFirstname(), contact.getLastname(), contact.getMiddlename(), contact.getMobilePhone()));
+            }
         }
-        writer.close();
     }
 
     private List<ContactData> generateContacts(int count) {
