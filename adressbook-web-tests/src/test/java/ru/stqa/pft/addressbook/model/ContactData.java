@@ -8,14 +8,16 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
 
 @Entity
-@Table(name = "address_book")
+@Table(name = "addressbook")
 public class ContactData {
+
     @Expose
     private String firstname;
     @Expose
     private String middlename;
     @Expose
     private String lastname;
+    @Column(name = "nickname")
     private String nick;
     @Column(name = "home")
     private String homePhone;
@@ -27,8 +29,11 @@ public class ContactData {
     @Transient
     private String allPhones;
     private String address;
+    @Transient
     private String email;
+    @Transient
     private String email2;
+    @Transient
     private String email3;
     @Transient
     private String allEmails;
