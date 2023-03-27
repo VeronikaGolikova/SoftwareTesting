@@ -1,7 +1,14 @@
 package ru.stqa.pft.addressbook.model;
 
 import com.google.gson.annotations.Expose;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
+@Entity
+@Table(name = "address_book")
 public class ContactData {
     @Expose
     private String firstname;
@@ -10,16 +17,23 @@ public class ContactData {
     @Expose
     private String lastname;
     private String nick;
+    @Column(name = "home")
     private String homePhone;
     @Expose
+    @Column(name = "mobile")
     private String mobilePhone;
+    @Column(name = "work")
     private String workPhone;
+    @Transient
     private String allPhones;
     private String address;
     private String email;
     private String email2;
     private String email3;
+    @Transient
     private String allEmails;
+    @Id
+    @Column(name = "id")
     private int id = Integer.MAX_VALUE;
 
     public String getFirstname() {
