@@ -32,6 +32,7 @@ public class ContactDataTests extends TestBase {
     assertThat(contact.getAllPhones(), equalTo(mergePhones(contactDataFromEditForm)));
     assertThat(contact.getAddress(), equalTo(contactDataFromEditForm.getAddress()));
     assertThat(contact.getAllEmails(), equalTo(mergeEmails(contactDataFromEditForm)));
+    verifyContactListInUi();
   }
 
   @Test (enabled = false)
@@ -39,6 +40,7 @@ public class ContactDataTests extends TestBase {
     ContactData contact = app.contact().all().iterator().next();
     ContactData contactDataFromEditForm = app.contact().infoFromEditForm(contact);
     assertThat(contact.getAllPhones(), equalTo(mergePhones(contactDataFromEditForm)));
+    verifyContactListInUi();
   }
 
   @Test (enabled = false)
@@ -46,6 +48,7 @@ public class ContactDataTests extends TestBase {
     ContactData contact = app.contact().all().iterator().next();
     ContactData contactDataFromEditForm = app.contact().infoFromEditForm(contact);
     assertThat(contact.getAddress(), equalTo(contactDataFromEditForm.getAddress()));
+    verifyContactListInUi();
   }
 
   @Test (enabled = false)
@@ -53,6 +56,7 @@ public class ContactDataTests extends TestBase {
     ContactData contact = app.contact().all().iterator().next();
     ContactData contactDataFromEditForm = app.contact().infoFromEditForm(contact);
     assertThat(contact.getAllEmails(), equalTo(mergeEmails(contactDataFromEditForm)));
+    verifyContactListInUi();
   }
 
   private String mergePhones(ContactData contact) {
