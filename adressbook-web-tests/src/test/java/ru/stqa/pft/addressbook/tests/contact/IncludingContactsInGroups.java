@@ -74,8 +74,8 @@ public class IncludingContactsInGroups  extends TestBase {
             ContactData contactForExcluding = contact.get();
             app.goTo().homePage();
             app.contact().deleteContactFromGroup(contactForExcluding,groupForExcluding);
-            GroupData groupAfterExcluding = groupsFromDb.stream().findFirst().get();
-            assertTrue(groupAfterExcluding.getContacts().stream().anyMatch(group -> group.getId() != contactForExcluding.getId()));
+            GroupData groupAfterExcluding = app.db().groups().stream().findFirst().get();
+            assertFalse(groupAfterExcluding.getContacts().stream().anyMatch(group -> group.getId() == contactForExcluding.getId()));
         } else {
             app.goTo().newContactPage();
             ContactData newContactForIncluding = app.contact().create(new ContactData()
