@@ -3,8 +3,10 @@ package ru.stqa.pft.addressbook.appmanager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 import ru.stqa.pft.addressbook.model.ContactData;
 import ru.stqa.pft.addressbook.model.Contacts;
+import ru.stqa.pft.addressbook.model.GroupData;
 
 import java.util.List;
 
@@ -54,10 +56,11 @@ public class ContactHelper extends HelperBase{
         return isElementPresent(By.name("selected[]"));
     }
 
-    public void create(ContactData contactData) {
+    public ContactData create(ContactData contactData) {
         fillContactForm(contactData);
         submitContactCreation();
         contactCache = null;
+        return contactData;
     }
 
     public void delete(ContactData contact) {
@@ -110,5 +113,19 @@ public class ContactHelper extends HelperBase{
         return new ContactData().withId(contact.getId()).withFirstname(firstName).withLastname(lastName)
                 .withMobilePhone(mobile).withWorkPhone(work).withHomePhone(home)
                 .withEmail(email).withEmail2(email2).withEmail3(email3);
+    }
+
+    public void addContactInGroup(ContactData contactForIncluding, GroupData groupForIncluding) {
+        selectContactById(contactForIncluding.getId());
+        Select drpGroup= new Select(wd.findElement(By.name("to_group")));
+        drpGroup.selectByValue(groupForIncluding.getId()+"");
+        wd.findElement(By.name("add")).click();
+    }
+
+    public void deleteContactFromGroup(ContactData contactForExcluding, GroupData groupForExcluding) {
+        Select drpGroup= new Select(wd.findElement(By.name("group")));
+        drpGroup.selectByValue(groupForExcluding.getId()+"");
+        selectContactById(contactForExcluding.getId());
+        wd.findElement(By.name("remove")).click();
     }
 }

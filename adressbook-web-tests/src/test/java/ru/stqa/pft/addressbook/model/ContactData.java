@@ -3,9 +3,16 @@ package ru.stqa.pft.addressbook.model;
 import com.google.gson.annotations.Expose;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Transient;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "addressbook")
@@ -35,11 +42,21 @@ public class ContactData {
     private String email2;
     @Transient
     private String email3;
+
     @Transient
     private String allEmails;
     @Id
     @Column(name = "id")
-    private int id = Integer.MAX_VALUE;
+    private int id;
+
+    @ManyToMany (fetch = FetchType.EAGER)
+    @JoinTable(name = "address_in_groups",
+            joinColumns = @JoinColumn(name = "id"), inverseJoinColumns = @JoinColumn(name = "group_id"))
+    private Set<GroupData> groups = new HashSet<GroupData>();
+
+    public Groups getGroups() {
+        return new Groups(groups);
+    }
 
     public String getFirstname() {
         return firstname;
@@ -167,6 +184,11 @@ public class ContactData {
         return this;
     }
 
+    public ContactData withGroups(Set<GroupData> groups) {
+        this.groups = groups;
+        return this;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -200,5 +222,10 @@ public class ContactData {
                 ", nick='" + nick + '\'' +
                 ", id=" + id +
                 '}';
+    }
+
+    public ContactData inGroup(GroupData group) {
+        groups.add(group);
+        return this;
     }
 }

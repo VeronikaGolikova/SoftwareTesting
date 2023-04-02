@@ -3,15 +3,20 @@ package ru.stqa.pft.addressbook.model;
 import com.google.gson.annotations.Expose;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "group_list")
 public class GroupData {
     @Id
     @Column(name = "group_id")
-    private int id = Integer.MAX_VALUE;
+    private int id;
     @Expose
     @Column(name = "group_name")
     private String name;
@@ -21,6 +26,9 @@ public class GroupData {
     @Expose
     @Column(name = "group_footer")
     private String footer;
+
+   @ManyToMany (fetch = FetchType.EAGER, mappedBy = "groups")
+    private Set<ContactData> contacts = new HashSet<ContactData>();
 
     public String getName() {
         return name;
@@ -36,6 +44,10 @@ public class GroupData {
 
     public int getId() {
         return id;
+    }
+
+    public Contacts getContacts() {
+        return new Contacts(contacts);
     }
 
     public GroupData withName (String name) {
