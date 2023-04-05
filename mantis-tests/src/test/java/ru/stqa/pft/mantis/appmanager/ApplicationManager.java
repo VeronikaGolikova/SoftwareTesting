@@ -18,6 +18,7 @@ public class ApplicationManager {
 
     public Browser browser;
     private RegistrationHelper registrationHalper;
+    private FtpHelper ftp;
 
     public ApplicationManager(Browser browser) {
         this.browser = browser;
@@ -50,6 +51,13 @@ public class ApplicationManager {
             registrationHalper = new RegistrationHelper(this);
         }
         return registrationHalper;
+    }
+
+    public FtpHelper ftp(){
+        if (ftp == null) {
+            ftp = new FtpHelper(this);
+        }
+        return ftp;
     }
 
     public WebDriver getDriver() {
