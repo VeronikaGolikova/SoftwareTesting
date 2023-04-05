@@ -7,11 +7,12 @@ repositories {
 }
 
 dependencies {
-//    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
-//    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
+  //  testImplementation 'org.junit.jupiter:junit-jupiter-api:5.7.0'
+ //   testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
     implementation 'org.testng:testng:7.3.0'
     implementation 'org.seleniumhq.selenium:selenium-java:4.8.0'
     implementation 'org.hamcrest:hamcrest:2.2'
+    implementation 'org.apache.httpcomponents:httpclient:4.5.14'
 //    implementation 'com.beust:jcommander:1.82'
 //    implementation 'com.google.code.gson:gson:2.10.1'
 //    implementation 'mysql:mysql-connector-java:8.0.31'
