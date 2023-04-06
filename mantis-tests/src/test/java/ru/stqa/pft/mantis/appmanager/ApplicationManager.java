@@ -20,18 +20,19 @@ public class ApplicationManager {
     private RegistrationHelper registrationHalper;
     private FtpHelper ftp;
     private MailHelper mailHelper;
+    private DbHelper dbHelper;
+    private ChangePwdHelper changePwd;
 
     public ApplicationManager(Browser browser) {
         this.browser = browser;
         properties = new Properties();
-    }
 
+    }
 
     public void init() throws IOException {
         String target = System.getProperty("target", "local");
         properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
     }
-
 
     public void stop() {
         if (wd != null) {
@@ -52,6 +53,13 @@ public class ApplicationManager {
             registrationHalper = new RegistrationHelper(this);
         }
         return registrationHalper;
+    }
+
+    public ChangePwdHelper changePwd() {
+        if (changePwd == null) {
+            changePwd = new ChangePwdHelper(this);
+        }
+        return changePwd;
     }
 
     public FtpHelper ftp(){
@@ -81,5 +89,13 @@ public class ApplicationManager {
             mailHelper = new MailHelper(this);
         }
         return mailHelper;
+    }
+
+
+    public DbHelper db(){
+        if (dbHelper == null) {
+            dbHelper = new DbHelper(this);
+        }
+        return dbHelper;
     }
 }

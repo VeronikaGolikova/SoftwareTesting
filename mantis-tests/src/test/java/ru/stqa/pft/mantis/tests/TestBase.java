@@ -3,9 +3,11 @@ package ru.stqa.pft.mantis.tests;
 import org.openqa.selenium.remote.Browser;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
+import ru.lanwen.verbalregex.VerbalExpression;
 import ru.stqa.pft.mantis.appmanager.ApplicationManager;
 
 import java.io.File;
+import java.util.List;
 
 public class TestBase {
 
@@ -36,4 +38,9 @@ public class TestBase {
         app.stop();
     }
 
+    protected static String findConfirmayionLink(List<ru.stqa.pft.mantis.model.MailMessage> mailMessages, String email) {
+        ru.stqa.pft.mantis.model.MailMessage mailMessage = mailMessages.stream().filter((m) -> m.to.equals(email)).findFirst().get();
+        VerbalExpression regex = VerbalExpression.regex().find("http://").nonSpace().oneOrMore().build();
+        return regex.getText(mailMessage.text);
+    }
 }
