@@ -17,8 +17,6 @@ public class ChangePasswordTests extends TestBase{
     @BeforeMethod
     public void startMailServer() {
         app.mail().start();
-    }
-    public void startDbConnection() {
         app.db().start();
     }
 
@@ -27,7 +25,7 @@ public class ChangePasswordTests extends TestBase{
 
         //сюда передать юзера из БД
         String user = "user1";
- //       Users users = app.db().users();
+        Users users = app.db().users();
         app.changePwd().byAdmin();
 
         List<MailMessage> mailMessages = app.mail().waitForMail(1, 10000);

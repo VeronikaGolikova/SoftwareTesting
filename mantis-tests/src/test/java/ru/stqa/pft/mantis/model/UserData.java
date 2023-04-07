@@ -4,11 +4,13 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "mantis_user_table")
 public class UserData {
 
+    @Transient
     public int delegate;
     @Column(name = "username")
     private String username;

@@ -16,24 +16,18 @@ public class DbHelper {
     private DbHelper db;
     private SessionFactory sessionFactory;
 
-//    public DbHelper() {
-//
-//            // A SessionFactory is set up once for an application!
-//            final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-//                    .configure() // configures settings from hibernate.cfg.xml
-//                    .build();
+    public DbHelper() {
+
+            // A SessionFactory is set up once for an application!
+            final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
+                    .configure() // configures settings from hibernate.cfg.xml
+                    .build();
 //            sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
-//        }
+        }
 
     public DbHelper(ApplicationManager app) {
-
+        db = new DbHelper();
         this.app = app;
-//        db = new DbHelper();
-        // A SessionFactory is set up once for an application!
-        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                .configure() // configures settings from hibernate.cfg.xml
-                .build();
-        sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
     }
 
 
