@@ -4,7 +4,8 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import ru.stqa.pft.mantis.model.MailMessage;
-import ru.stqa.pft.mantis.model.Users;
+import ru.stqa.pft.mantis.model.UserData;
+import ru.stqa.pft.mantis.utils.PasswordGenerator;
 
 import java.io.IOException;
 import java.util.List;
@@ -17,30 +18,24 @@ public class ChangePasswordTests extends TestBase{
     @BeforeMethod
     public void startMailServer() {
         app.mail().start();
-        app.db().start();
     }
 
     @Test
     public void testChangePassword() throws IOException {
 
-        //сюда передать юзера из БД
-        String user = "user1";
-        Users users = app.db().users();
-        app.changePwd().byAdmin();
-
+        UserData userChangePwd = app.dbHelper().users().stream().filter(u -> u.getUsername() != "administrator").findAny().get();
+        String user = userChangePwd.getUsername();
+        app.changePwd().byAdmin(user);
+        String generatePwd =  new PasswordGenerator.PasswordGeneratorBuilder().useLower(true).useUpper(true)
+                .build().generate(8);
         List<MailMessage> mailMessages = app.mail().waitForMail(1, 10000);
         String confirmayionLink = findConfirmayionLink(mailMessages, user + "email@localhosc.localdomain");
-        app.changePwd().acceptByUser(confirmayionLink, user, "passwordNew");
-
-        assertTrue (app.newSession().login(user, "passwordNew"));
-
+        app.changePwd().acceptByUser(confirmayionLink, user, generatePwd);
+        assertTrue (app.newSession().login(user, generatePwd));
     }
 
     @AfterMethod(alwaysRun = true)
     public void stopMailServer() {
         app.mail().stop();
-    }
-    public void stopDbConnection() {
-        app.db().stop();
     }
 }

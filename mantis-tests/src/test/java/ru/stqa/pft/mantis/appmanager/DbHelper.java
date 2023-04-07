@@ -13,21 +13,16 @@ import ru.stqa.pft.mantis.model.Users;
 public class DbHelper {
 
     private ApplicationManager app;
-    private DbHelper db;
     private SessionFactory sessionFactory;
 
-    public DbHelper() {
-
-            // A SessionFactory is set up once for an application!
-            final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
-                    .configure() // configures settings from hibernate.cfg.xml
-                    .build();
-//            sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
-        }
 
     public DbHelper(ApplicationManager app) {
-        db = new DbHelper();
         this.app = app;
+        // A SessionFactory is set up once for an application!
+        final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
+                .configure() // configures settings from hibernate.cfg.xml
+                .build();
+        sessionFactory = new MetadataSources(registry).buildMetadata().buildSessionFactory();
     }
 
 
@@ -40,12 +35,5 @@ public class DbHelper {
             return new Users(result);
         }
 
-    public void start() {
-        db.start();
-    }
-
-    public void stop() {
-        db.stop();
-    }
 
 }

@@ -26,7 +26,6 @@ public class ApplicationManager {
     public ApplicationManager(Browser browser) {
         this.browser = browser;
         properties = new Properties();
-
     }
 
     public void init() throws IOException {
@@ -92,7 +91,7 @@ public class ApplicationManager {
     }
 
 
-    public DbHelper db(){
+    public DbHelper dbHelper(){
         if (dbHelper == null) {
             dbHelper = new DbHelper(this);
         }

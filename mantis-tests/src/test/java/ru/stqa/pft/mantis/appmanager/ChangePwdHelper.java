@@ -15,14 +15,14 @@ public class ChangePwdHelper extends HelperBase {
         super(app);
     }
 
-    public void byAdmin() throws IOException {
+    public void byAdmin(String user) throws IOException {
         wd.get(app.getProperty("web.baseUrl") + "/login_page.php");
         type(By.id("username"), "administrator");
         click(By.xpath("//input[@type=\"submit\"]"));
         type(By.id("password"), "root");
         click(By.xpath("//input[@type=\"submit\"]"));
         wd.get(app.getProperty("web.baseUrl") + "/manage_user_page.php");
-        click(By.xpath("//*[.='user1']"));
+        click(By.xpath("//*[.='" + user + "']"));
         click(By.xpath("//input[@value='Сбросить пароль']"));
     }
 
@@ -32,6 +32,5 @@ public class ChangePwdHelper extends HelperBase {
         type(By.name("password"), password);
         type(By.name("password_confirm"), password);
         click(By.xpath("//button"));
-
     }
 }
