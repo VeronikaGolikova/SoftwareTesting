@@ -32,7 +32,7 @@ public class SoapHelper {
                 .collect(Collectors.toSet());
     }
 
-    private MantisConnectPortType getMantisConnect() throws ServiceException, MalformedURLException {
+    public MantisConnectPortType getMantisConnect() throws ServiceException, MalformedURLException {
         MantisConnectPortType mc = new MantisConnectLocator()
                 .getMantisConnectPort(new URL(app.getProperty("web.baseUrl") + app.getProperty("soap.api.endpoint")));
         return mc;
