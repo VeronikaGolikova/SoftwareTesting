@@ -23,7 +23,7 @@ public class RestAssuredHelper {
 
     public Set<Issue> getIssues(){
         init();
-        String json = RestAssured.get(app.getProperty("rest.api.url")).asString();
+        String json = RestAssured.given().param("limit", "100").get(app.getProperty("rest.getIssues")).asString();
         JsonElement parsed = new JsonParser().parse(json);
         JsonElement issues = parsed.getAsJsonObject().get("issues");
         return new Gson().fromJson(issues, new TypeToken<Set <Issue>>(){}.getType());
@@ -33,7 +33,7 @@ public class RestAssuredHelper {
         String json = RestAssured.given()
                 .param("subject", newIssue.getSubject())
                 .param("description", newIssue.getDescription())
-                .post((app.getProperty("rest.api.url"))).asString();
+                .post((app.getProperty("rest.getIssues"))).asString();
         JsonElement parsed = new JsonParser().parse(json);
         return parsed.getAsJsonObject().get("issue_id").getAsInt();
     }

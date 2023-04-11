@@ -2,7 +2,7 @@ package ru.stqa.pft.rest.tests;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import org.apache.http.client.fluent.Request;
+import io.restassured.RestAssured;
 import org.testng.SkipException;
 import org.testng.annotations.BeforeSuite;
 import ru.stqa.pft.rest.appmanager.ApplicationManager;
@@ -19,14 +19,17 @@ public class TestBase {
     }
 
     boolean isIssueOpen(int issueId) throws IOException {
-        String json = app.restHelper().getExecutor().execute(Request.Get((app.getProperty("rest.api.url" ) )))
-                .returnContent().asString();
+        app.restAssuredHelper().init();
+        String json = RestAssured.get(app.getProperty("rest.getIssueById") + issueId + ".json").asString();
         JsonElement parsed = new JsonParser().parse(json);
-        JsonElement issues = parsed.getAsJsonObject().get("issues");
-
-
-        return isBugHere = true;
-
+        JsonElement issue = parsed.getAsJsonObject().get("issues");
+        JsonElement element = issue.getAsJsonArray().get(0);
+        String status = element.getAsJsonObject().get("state_name").getAsString();
+        if (status.equals("closed")) {
+            return isBugHere = false;
+        } else {
+            return isBugHere = true;
+        }
     }
 
     public void skipIfNotFixed(int issueId) throws IOException {
