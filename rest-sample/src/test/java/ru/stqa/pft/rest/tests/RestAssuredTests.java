@@ -1,6 +1,7 @@
 package ru.stqa.pft.rest.tests;
 
 import org.testng.annotations.Test;
+import ru.stqa.pft.rest.appmanager.RestAssuredHelper;
 import ru.stqa.pft.rest.model.Issue;
 
 import java.io.IOException;

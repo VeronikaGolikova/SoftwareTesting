@@ -4,9 +4,11 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.google.gson.reflect.TypeToken;
+import io.restassured.RestAssured;
 import org.apache.http.client.fluent.Executor;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.message.BasicNameValuePair;
+import org.testng.SkipException;
 import ru.stqa.pft.rest.model.Issue;
 
 import java.io.IOException;
@@ -17,7 +19,7 @@ public class RestHelper {
     private ApplicationManager app;
 
     public RestHelper(ApplicationManager applicationManager) {
-        this.app = app;
+        this.app = applicationManager;
     }
 
     public Executor getExecutor() {
@@ -25,7 +27,7 @@ public class RestHelper {
     }
 
     public Set<Issue> getIssues() throws IOException {
-        String json = app.restHelper().getExecutor().execute(Request.Get((app.getProperty("rest.api.url"))))
+        String json = app.restHelper().getExecutor().execute(Request.Get((app.getProperty("rest.api.url" ) )))
                 .returnContent().asString();
         JsonElement parsed = new JsonParser().parse(json);
         JsonElement issues = parsed.getAsJsonObject().get("issues");
@@ -33,11 +35,12 @@ public class RestHelper {
     }
 
     public int createIssue(Issue newIssue) throws IOException {
-        String json = app.restHelper().getExecutor().execute(Request.Post((app.getProperty("rest.api.url")))
+        String json = app.restHelper().getExecutor().execute(Request.Post((app.getProperty("rest.api.url") ))
                         .bodyForm(new BasicNameValuePair("subject", newIssue.getSubject()),
                                 new BasicNameValuePair("description", newIssue.getDescription())))
                 .returnContent().asString();
         JsonElement parsed = new JsonParser().parse(json);
         return parsed.getAsJsonObject().get("issue_id").getAsInt();
     }
+
 }
