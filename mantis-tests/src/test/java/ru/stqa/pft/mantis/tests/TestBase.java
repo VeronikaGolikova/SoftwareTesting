@@ -32,7 +32,6 @@ public class TestBase {
                 return false;
         }
     });
-    private boolean isBugHere;
 
     @BeforeSuite(alwaysRun = true)
     public void setUp() throws Exception {
@@ -57,11 +56,7 @@ public class TestBase {
         IssueData issueData = mc.mc_issue_get(app.getProperty("web.adminLogin"), app.getProperty("web.adminPassword"),
                 BigInteger.valueOf(issueId));
         String status = issueData.getStatus().getName();
-        if (status.equals("closed")) {
-            return isBugHere = false;
-        } else {
-            return isBugHere = true;
-        }
+        return !(status.equals("closed"));
     }
 
     public void skipIfNotFixed(int issueId) throws MalformedURLException, ServiceException, RemoteException {
