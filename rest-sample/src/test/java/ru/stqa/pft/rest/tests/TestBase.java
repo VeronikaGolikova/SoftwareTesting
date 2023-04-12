@@ -11,7 +11,6 @@ import java.io.IOException;
 
 public class TestBase {
     protected static ApplicationManager app = new ApplicationManager();
-    private boolean isBugHere;
 
     @BeforeSuite(alwaysRun = true)
     public void setUp() throws Exception {
@@ -25,11 +24,12 @@ public class TestBase {
         JsonElement issue = parsed.getAsJsonObject().get("issues");
         JsonElement element = issue.getAsJsonArray().get(0);
         String status = element.getAsJsonObject().get("state_name").getAsString();
-        if (status.equals("closed")) {
-            return isBugHere = false;
-        } else {
-            return isBugHere = true;
-        }
+        return !(status.equals("Closed"));
+//        if (status.equals("Closed")) {
+//            return false;
+//        } else {
+//            return true;
+//        }
     }
 
     public void skipIfNotFixed(int issueId) throws IOException {
