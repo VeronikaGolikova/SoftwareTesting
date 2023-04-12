@@ -49,9 +49,11 @@ public class IncludingContactsInGroups  extends TestBase {
                     .summaryStatistics()
                     .getMax();
             newContactForIncluding.withId(maxId);
+            contactForIncluding = newContactForIncluding;
         }
         app.contact().addContactInGroup(contactForIncluding, groupForIncluding);
-        contactAfterIncluding = app.db().contacts().stream().filter(c -> c.getId()==contactForIncluding.getId()).findAny().get();
+        ContactData finalContactForIncluding = contactForIncluding;
+        contactAfterIncluding = app.db().contacts().stream().filter(c -> c.getId()== finalContactForIncluding.getId()).findAny().get();
         assertTrue(contactAfterIncluding.getGroups()
                 .stream().anyMatch(group -> group.getId()==groupForIncluding.getId()));
     }
