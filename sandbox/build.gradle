@@ -11,3 +11,7 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.7.0'
     implementation 'org.testng:testng:7.3.0'
 }
+
+test {
+    useTestNG()
+}
