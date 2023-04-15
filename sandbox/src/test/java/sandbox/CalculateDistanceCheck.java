@@ -30,6 +30,6 @@ public class CalculateDistanceCheck {
     public void testDistanceCheckWithSimillarPoint() {
         Point p1 = new Point(2, 2);
         Point p2 = new Point(2, 2);
-        Assert.assertEquals(p1.countDistance(p2), 1.0);
+        Assert.assertEquals(p1.countDistance(p2), 0.0);
     }
 }
