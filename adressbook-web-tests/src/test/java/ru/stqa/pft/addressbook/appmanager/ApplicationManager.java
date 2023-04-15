@@ -41,7 +41,7 @@ public class ApplicationManager {
         properties.load(new FileReader(new File(String.format("src/test/resources/%s.properties", target))));
 
         dbHelper = new DbHelper();
-
+System.out.println("!!!!!!!!!!!!!!!!!!");
         if ("".equals(properties.getProperty("selenium.server"))) {
             if (browser.equals(Browser.FIREFOX)) {
                 wd = new FirefoxDriver();
