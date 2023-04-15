@@ -1,16 +1,20 @@
 package ru.stqa.pft.addressbook.appmanager;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.remote.Browser;
+import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.safari.SafariDriver;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URL;
 import java.util.Properties;
 import java.util.concurrent.TimeUnit;
 
@@ -23,11 +27,13 @@ public class ApplicationManager {
     private SessionHelper sessionHelper;
     private ContactHelper contactHelper;
     public Browser browser;
+    public String strBrowser;
     private DbHelper dbHelper;
 
     public ApplicationManager(Browser browser) {
         this.browser = browser;
         properties = new Properties();
+        strBrowser = browser.toString();
     }
 
 
@@ -37,13 +43,20 @@ public class ApplicationManager {
 
         dbHelper = new DbHelper();
 
-        if (browser.equals(Browser.FIREFOX)) {
-            wd = new FirefoxDriver();
-        } else if (browser .equals(Browser.CHROME)) {
-            wd = new ChromeDriver();
-        } else if (browser .equals(Browser.SAFARI)) {
-            wd = new SafariDriver();
+        if ("".equals(properties.getProperty("selenium.server"))) {
+            if (browser.equals(Browser.FIREFOX)) {
+                wd = new FirefoxDriver();
+            } else if (browser .equals(Browser.CHROME)) {
+                wd = new ChromeDriver();
+            } else if (browser .equals(Browser.SAFARI)) {
+                wd = new SafariDriver();
+            }
+        } else {
+            DesiredCapabilities capabilities = new DesiredCapabilities();
+            capabilities.setBrowserName(strBrowser);
+            wd = new RemoteWebDriver(new URL (properties.getProperty("selenium.server")), capabilities);
         }
+
 
         wd.manage().timeouts().implicitlyWait(3, TimeUnit.SECONDS);
         wd.get(properties.getProperty("web.baseUrl"));
